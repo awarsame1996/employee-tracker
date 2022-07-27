@@ -1,0 +1,5 @@
+USE employee_db;
+
+INSERT INTO DEPARTMENT(NAME, ADDRESS){
+    "RIZ", "BIRMINGHAM"
+}
