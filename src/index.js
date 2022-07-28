@@ -29,7 +29,6 @@ const init = async () => {
 		while (inProgress) {
 			const { journey } = await optionQuestions();
 			//check which option clicked and prompt the questions required
-			//check which option clicked and prompt the questions required
 			if (journey === 'view all departments') {
 				//get the data
 				const allDepartments = await executeQuery(allDepartmentsQuery);
@@ -51,8 +50,21 @@ const init = async () => {
 			}
 			if (journey === 'add a department') {
 				//   get the answer
+				let addDepartments = await addDepartment();
 				// get data
+				console.log(addDepartments.departmentName);
+				// get max id
+				const maxId = await executeQuery(
+					'SELECT max(id) as max FROM DEPARTMENT'
+				);
+				const newId = maxId[0].max + 1;
+
 				// store the data
+
+				const addAnotherDepartment = await executeQuery(
+					`INSERT INTO DEPARTMENT (id, department_name) VALUES ` +
+						`(${newId}, '${addDepartments.departmentName}')`
+				);
 				// show the data
 			}
 			if (journey === 'add a role') {
