@@ -1,22 +1,26 @@
 const inquirer = require('inquirer');
 
-const optionQuestions = [
-	{
-		type: 'list',
-		message: 'please select an option',
-		name: 'proceed',
-		choices: [
-			'view all departments',
-			'view all roles',
-			'view all employees',
-			'add a department',
-			'add a role',
-			'add an employee',
-			'update an employee',
-			'quit',
-		],
-	},
-];
+const optionQuestions = async () => {
+	const questions = [
+		{
+			type: 'list',
+			message: 'please select an option',
+			name: 'proceed',
+			choices: [
+				'view all departments',
+				'view all roles',
+				'view all employees',
+				'add a department',
+				'add a role',
+				'add an employee',
+				'update an employee',
+				'quit',
+			],
+		},
+	];
+	const { proceed } = await inquirer.prompt(questions);
+	return { proceed };
+};
 const addDepartment = async () => {
 	const questions = [
 		{
