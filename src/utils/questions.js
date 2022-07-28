@@ -5,7 +5,7 @@ const optionQuestions = async () => {
 		{
 			type: 'list',
 			message: 'please select an option',
-			name: 'proceed',
+			name: 'journey',
 			choices: [
 				'view all departments',
 				'view all roles',
@@ -18,8 +18,8 @@ const optionQuestions = async () => {
 			],
 		},
 	];
-	const { proceed } = await inquirer.prompt(questions);
-	return { proceed };
+	const { journey } = await inquirer.prompt(questions);
+	return { journey };
 };
 const addDepartment = async () => {
 	const questions = [

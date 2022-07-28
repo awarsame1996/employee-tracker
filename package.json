@@ -1,25 +1,26 @@
 {
-  "name": "employee-tracker",
-  "version": "1.0.0",
-  "description": "CMS interface that allow users to easily view and interact with information stored in databases",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/awarsame1996/employee-tracker.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/awarsame1996/employee-tracker/issues"
-  },
-  "homepage": "https://github.com/awarsame1996/employee-tracker#readme",
-  "dependencies": {
-    "console.table": "^0.10.0",
-    "inquirer": "^9.0.2",
-    "mysql2": "^2.3.3"
-  }
+	"name": "employee-tracker",
+	"version": "1.0.0",
+	"description": "CMS interface that allow users to easily view and interact with information stored in databases",
+	"main": "index.js",
+	"scripts": {
+		"start": "node ./src/index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/awarsame1996/employee-tracker.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/awarsame1996/employee-tracker/issues"
+	},
+	"homepage": "https://github.com/awarsame1996/employee-tracker#readme",
+	"dependencies": {
+		"console.table": "^0.10.0",
+		"dotenv": "^16.0.1",
+		"inquirer": "^8.0.0",
+		"mysql2": "^2.3.3"
+	}
 }

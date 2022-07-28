@@ -1,3 +1,4 @@
+require('dotenv').config();
 const inquirer = require('inquirer');
 const {
 	optionQuestions,
@@ -6,55 +7,80 @@ const {
 	AddEmployee,
 	updateEmployee,
 } = require('./utils/questions');
+const initDatabase = require('./db');
+const {
+	allDepartmentsQuery,
+	allRolesQuery,
+	allEmployeesQuery,
+} = require('./utils/utils');
 
-const init = () => {
+const init = async () => {
 	// start asking the questions using inquirer
+	try {
+		//connect to the database
+		const { executeQuery, closeConnection } = await initDatabase({
+			host: process.env.DB_HOST,
+			user: process.env.DB_USER,
+			password: process.env.DB_PASSWORD,
+			database: process.env.DB_NAME,
+		});
+		let inProgress = true;
 
-    let inProgress = true
-    
-    while (inProgress) {
-        let selectedOption = await optionQuestions();
-        //check which option clicked and prompt the questions required
-        if (selectedOption.optionQuestions === 'view all departments'){
-            //get the data
-            // show the data
-        }
-        else if (selectedOption.optionQuestions === 'view all roles'){
-               //get the data
-            // show the data
-        }
-        else if (selectedOption.optionQuestions === 'view all employees'){
-            //get the data
-         // show the data
-     }
-     else if (selectedOption.optionQuestions === 	'add a department'){
-    //   get the answer
-    // get data
-    // store the data
-     // show the data
- }
- else if (selectedOption.optionQuestions === 	'add a role'){
-    //   get the answer
-    // get data
-    // store the data
-     // show the data
- }
- else if (selectedOption.optionQuestions === 	'add an employee'){
-    //   get the answer
-    // get data
-    // store the data
-     // show the data
- }
- else if (selectedOption.optionQuestions === 	'update an employee'){
-    //   get the answer
-    // get data
-    // store the data
-     // show the data
- }
- else if (selectedOption.optionQuestions === 	'quit'){
-   inProgress = false
- }
-    }
+		while (inProgress) {
+			const { journey } = await optionQuestions();
+			//check which option clicked and prompt the questions required
+			//check which option clicked and prompt the questions required
+			if (journey === 'view all departments') {
+				//get the data
+				const allDepartments = await executeQuery(allDepartmentsQuery);
+
+				// show the data
+				console.table(allDepartments);
+			}
+			if (journey === 'view all roles') {
+				//get the data
+				const allRoles = await executeQuery(allRolesQuery);
+				// show the data
+				console.table(allRoles);
+			}
+			if (journey === 'view all employees') {
+				//get the data
+				const allEmployees = await executeQuery(allEmployeesQuery);
+				// show the data
+				console.table(allEmployees);
+			}
+			if (journey === 'add a department') {
+				//   get the answer
+				// get data
+				// store the data
+				// show the data
+			}
+			if (journey === 'add a role') {
+				//   get the answer
+				// get data
+				// store the data
+				// show the data
+			}
+			if (journey === 'add an employee') {
+				//   get the answer
+				// get data
+				// store the data
+				// show the data
+			}
+			if (journey === 'update an employee') {
+				//   get the answer
+				// get data
+				// store the data
+				// show the data
+			}
+			if (journey === 'quit') {
+				inProgress = false;
+				console.log('thank you');
+			}
+		}
+	} catch (error) {
+		console.log(`[ERROR]: Internal error | ${error.message}`);
+	}
 };
 
 init();
