@@ -5,7 +5,4 @@ const allRolesQuery = 'SELECT * FROM role';
 
 const allEmployeesQuery = 'SELECT * FROM EMPLOYEES';
 
-const addAdepartment = (anId, aName) =>
-	`INSERT INTO department (id, name) VALUES ('${anId}', '${aName}')`;
-
 module.exports = { allDepartmentsQuery, allRolesQuery, allEmployeesQuery };

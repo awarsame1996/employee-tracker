@@ -145,10 +145,37 @@ const init = async () => {
 				// show the data
 			}
 			if (journey === 'update an employee') {
+				// get all roles
+				let allRoleNames = await executeQuery('SELECT title FROM role');
+				// create array of role choices
+				let roleArray = [];
+				const pushToArray = allRoleNames.map((item) =>
+					roleArray.push(item.title)
+				);
+
+				console.log(roleArray);
+
+				// create array of employee choices
+				let allEmployeeNames = await executeQuery(
+					'SELECT first_name FROM EMPLOYEES'
+				);
+				console.log(allEmployeeNames);
+				let employeeArray = [];
+				const pushTArray = allEmployeeNames.map((item) =>
+					employeeArray.push(item.first_name)
+				);
 				//   get the answer
-				// get data
+				const updateAnswers = await updateEmployee(
+					employeeArray,
+					roleArray
+				);
+				console.log(updateAnswers);
+				const roleId = `(SELECT id FROM role WHERE title= '${updateAnswers.role}')`;
+
 				// store the data
-				// show the data
+				const updateQuery = await executeQuery(
+					`UPDATE employees SET role_id = ${roleId} WHERE first_name = '${updateAnswers.employee}'`
+				);
 			}
 			if (journey === 'quit') {
 				inProgress = false;

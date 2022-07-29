@@ -105,8 +105,7 @@ const updateEmployee = async (employeeArray, roleArray) => {
 			type: 'list',
 			message: 'please select the new role',
 			name: 'role',
-			choices,
-			roleArray,
+			choices: roleArray,
 		},
 	];
 	const { employee, role } = await inquirer.prompt(questions);
