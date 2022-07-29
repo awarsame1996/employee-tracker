@@ -68,9 +68,33 @@ const init = async () => {
 				// show the data
 			}
 			if (journey === 'add a role') {
+				// get all departments
+				let allDepartmentNames = await executeQuery(
+					'SELECT department_name FROM DEPARTMENT'
+				);
+				//create the array of choices
+				let departmentArray = [];
+				const pushToArray = allDepartmentNames.map((item) =>
+					departmentArray.push(item.department_name)
+				);
+				console.log(departmentArray);
 				//   get the answer
+				let addRoles = await addRole(departmentArray);
 				// get data
+				console.log(addRoles);
+				// get department id
+				const departmentId = `(SELECT id FROM department WHERE department_name = '${addRoles.department}')`;
+				// get max id
+				const maxId = await executeQuery(
+					'SELECT max(id) as max FROM role'
+				);
+				const newId = maxId[0].max + 1;
+
 				// store the data
+				const addAnotherRole = await executeQuery(
+					`INSERT INTO role (id, title, salary, department_id) VALUES` +
+						`(${newId}, '${addRoles.title}', '${addRoles.salary}', ${departmentId})`
+				);
 				// show the data
 			}
 			if (journey === 'add an employee') {
