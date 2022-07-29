@@ -83,7 +83,7 @@ const init = async () => {
 				// get data
 				console.log(addRoles);
 				// get department id
-				const departmentId = `(SELECT id FROM department WHERE department_name = '${addRoles.department}')`;
+				const departmentId = `(SELECT id FROM DEPARTMENT WHERE department_name = '${addRoles.department}')`;
 				// get max id
 				const maxId = await executeQuery(
 					'SELECT max(id) as max FROM role'
@@ -98,9 +98,50 @@ const init = async () => {
 				// show the data
 			}
 			if (journey === 'add an employee') {
+				// get all employees
+				const allEmployees = await executeQuery(allEmployeesQuery);
+				console.log(allEmployees);
+				// get all roles
+				let allRoleNames = await executeQuery('SELECT title FROM role');
+				// create array of role choices
+				let roleArray = [];
+				const pushToArray = allRoleNames.map((item) =>
+					roleArray.push(item.title)
+				);
+
+				console.log(roleArray);
+
+				// create array of manager choices
+				let allManagerNames = await executeQuery(
+					'SELECT first_name FROM EMPLOYEES'
+				);
+				console.log(allManagerNames);
+				let managerArray = [];
+				const pushTArray = allManagerNames.map((item) =>
+					managerArray.push(item.first_name)
+				);
+				// get max id
+				const maxId = await executeQuery(
+					'SELECT max(id) as max FROM EMPLOYEES'
+				);
+				const newId = maxId[0].max + 1;
+
 				//   get the answer
+				let addEmployees = await AddEmployee(roleArray, managerArray);
+				console.log(addEmployees);
 				// get data
+				// get department id
+				const managerId = allEmployees.filter(
+					(item) => item.first_name === addEmployees.manager
+				)[0].id;
+				console.log(managerId);
+				const roleId = `(SELECT id FROM role WHERE title= '${addEmployees.role}')`;
+
 				// store the data
+				const addAnotherRole = await executeQuery(
+					`INSERT INTO EMPLOYEES (id, first_name, last_name, role_id, manager_id) VALUES` +
+						`(${newId}, '${addEmployees.first_name}', '${addEmployees.last_name}',  ${roleId}, ${managerId})`
+				);
 				// show the data
 			}
 			if (journey === 'update an employee') {
