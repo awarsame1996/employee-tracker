@@ -52,7 +52,7 @@ const init = async () => {
 				//   get the answer
 				let addDepartments = await addDepartment();
 				// get data
-				console.log(addDepartments.departmentName);
+
 				// get max id
 				const maxId = await executeQuery(
 					'SELECT max(id) as max FROM DEPARTMENT'
@@ -77,11 +77,11 @@ const init = async () => {
 				const pushToArray = allDepartmentNames.map((item) =>
 					departmentArray.push(item.department_name)
 				);
-				console.log(departmentArray);
+
 				//   get the answer
 				let addRoles = await addRole(departmentArray);
 				// get data
-				console.log(addRoles);
+
 				// get department id
 				const departmentId = `(SELECT id FROM DEPARTMENT WHERE department_name = '${addRoles.department}')`;
 				// get max id
@@ -100,7 +100,7 @@ const init = async () => {
 			if (journey === 'add an employee') {
 				// get all employees
 				const allEmployees = await executeQuery(allEmployeesQuery);
-				console.log(allEmployees);
+
 				// get all roles
 				let allRoleNames = await executeQuery('SELECT title FROM role');
 				// create array of role choices
@@ -109,13 +109,11 @@ const init = async () => {
 					roleArray.push(item.title)
 				);
 
-				console.log(roleArray);
-
 				// create array of manager choices
 				let allManagerNames = await executeQuery(
 					'SELECT first_name FROM EMPLOYEES'
 				);
-				console.log(allManagerNames);
+
 				let managerArray = [];
 				const pushTArray = allManagerNames.map((item) =>
 					managerArray.push(item.first_name)
@@ -128,13 +126,13 @@ const init = async () => {
 
 				//   get the answer
 				let addEmployees = await AddEmployee(roleArray, managerArray);
-				console.log(addEmployees);
+
 				// get data
 				// get department id
 				const managerId = allEmployees.filter(
 					(item) => item.first_name === addEmployees.manager
 				)[0].id;
-				console.log(managerId);
+
 				const roleId = `(SELECT id FROM role WHERE title= '${addEmployees.role}')`;
 
 				// store the data
@@ -153,13 +151,11 @@ const init = async () => {
 					roleArray.push(item.title)
 				);
 
-				console.log(roleArray);
-
 				// create array of employee choices
 				let allEmployeeNames = await executeQuery(
 					'SELECT first_name FROM EMPLOYEES'
 				);
-				console.log(allEmployeeNames);
+
 				let employeeArray = [];
 				const pushTArray = allEmployeeNames.map((item) =>
 					employeeArray.push(item.first_name)
@@ -169,12 +165,12 @@ const init = async () => {
 					employeeArray,
 					roleArray
 				);
-				console.log(updateAnswers);
+
 				const roleId = `(SELECT id FROM role WHERE title= '${updateAnswers.role}')`;
 
 				// store the data
 				const updateQuery = await executeQuery(
-					`UPDATE employees SET role_id = ${roleId} WHERE first_name = '${updateAnswers.employee}'`
+					`UPDATE employees SET role_id = ${roleId} WHERE first_name = '${updateAnswers.employee}'  `
 				);
 			}
 			if (journey === 'quit') {
